@@ -1,0 +1,25 @@
+
+g1_p1:
+  game_id: 1
+  player_id: 1
+g1_p2:
+  game_id: 1
+  player_id: 2
+g2_p1:
+  game_id: 2
+  player_id: 1
+g2_p2:
+  game_id: 2
+  player_id: 2
+g3_p1:
+  game_id: 3
+  player_id: 1
+g3_p2:
+  game_id: 3
+  player_id: 2
+g4_p1:
+  game_id: 4
+  player_id: 1
+g4_p2:
+  game_id: 4
+  player_id: 2

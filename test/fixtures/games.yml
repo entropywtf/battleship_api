@@ -1,9 +1,20 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+game_one:
+  id: 1
   winner_uid: 1
+  turn_uid: 2
+
+game_two:
+  id: 2
+  winner_uid: 2
   turn_uid: 1
 
-two:
-  winner_uid: 1
+game_three:
+  id: 3
+  winner_uid: 2
   turn_uid: 1
+
+game_four:
+  id: 4
+  turn_uid: 2

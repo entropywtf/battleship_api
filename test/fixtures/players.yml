@@ -1,7 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
+player_one:
+  id: 1
+  name: Michi
 
-two:
-  name: MyString
+player_two:
+  id: 2
+  name: Clara
+
+player_three:
+  id: 3
+  name: Toby
