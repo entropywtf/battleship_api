@@ -27,8 +27,8 @@ g3_p2_score:
 g4_p1_score:
   player_id: 1
   game_id: 4
-  score: 5
+  score: 0
 g4_p2_score:
   player_id: 2
   game_id: 4
-  score: 6
+  score: 0

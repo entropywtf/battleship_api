@@ -1,0 +1,6 @@
+<% board = Board.initialize_empty_board %>
+<% board[0][0] = "carrier" %>
+g4_p1_board:
+  game_id: 4
+  player_id: 1
+  grid: <%= board %>

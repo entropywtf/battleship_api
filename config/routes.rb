@@ -9,6 +9,7 @@ Rails.application.routes.draw do
           post 'start_game'
           post 'pause_game'
           post 'resume_game'
+          post 'make_turn'
         end
         collection do
           get 'leaderboard'

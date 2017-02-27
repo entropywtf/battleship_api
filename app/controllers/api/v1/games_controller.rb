@@ -57,7 +57,14 @@ EOF
         elsif @game.state != "init"
           render json: { status: :unprocessable_entity,
             message: "This game has been already started." }
+        elsif !Board.where(game_id: @game.id, player_id:
+          [@game.player_ids]).exists?
+
+          render json: { message: "Boards are not set up for players.",
+            status: :success }
         else
+          @game.player_ids.each{ |id| Score.create(game_id: @game.id,
+            player_id: id, score: 0) }
           @game.state = "on"
           @game.turn_uid = @game.player_ids.first
           @game.save
@@ -82,6 +89,22 @@ EOF
         render json: {
           message: "Game resumed. Next turn: #{Player.find(@game.turn_uid).name}",
           status: :success }
+      end
+
+      def make_turn
+        @game = Game.find(params[:id])
+        player_id = params[:player_id].to_i
+        if @game.state == "init"
+          render json: { message: "Start a game first to know whose turn it is.",
+            status: :success }
+        elsif @game.turn_uid != player_id
+          render json: { message: "This is not your turn.", status: :success }
+        else
+          opponent_id = @game.players.where.not(id: player_id)
+          board = Board.where(game_id: @game.id, player_id: opponent_id).first
+          msg = board.hit_cell(params[:cell], player_id)
+          render json: { message: msg, status: :success }
+        end
       end
     end
   end

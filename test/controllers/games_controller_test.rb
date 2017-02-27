@@ -46,7 +46,7 @@ class Api::V1::GamesControllerTest < ActionController::TestCase
     assert_response :success
     jdata = JSON.parse response.body
     refute jdata["is_over"]
-    assert_equal jdata["score"], [["Michi", 1, 5], ["Clara", 2, 6]]
+    assert_equal jdata["score"], [["Michi", 1, 0], ["Clara", 2, 0]]
   end
 
   test "Should render a leaderboard" do
@@ -71,11 +71,20 @@ class Api::V1::GamesControllerTest < ActionController::TestCase
       }
     }
     assert_response :success
-    b = Board.first
+    b = Board.last
     assert_equal b.grid[0][2], "carrier"
   end
 
+  test "Should not start a game if boards for players are not set up" do
+    post :start_game, params: { id: 5 }
+    assert_response :success
+    jdata = JSON.parse response.body
+    assert_match(/Boards are not set up for players./, jdata["message"])
+  end
+
   test "Should start a game" do
+    Board.create(game_id: 5, player_id:1)
+    Board.create(game_id: 5, player_id:2)
     post :start_game, params: { id: 5 }
     assert_response :success
     jdata = JSON.parse response.body
@@ -112,5 +121,34 @@ class Api::V1::GamesControllerTest < ActionController::TestCase
     jdata = JSON.parse response.body
     assert_match(/Game resumed. Next turn:/, jdata["message"])
     assert_equal Game.find(1).state, "on"
+  end
+
+  test "Should not make turn if it's not turn of this player" do
+    post :make_turn, params: { id: 4, player_id: 1 }
+    assert_response :success
+    jdata = JSON.parse response.body
+    assert_match(/This is not your turn./, jdata["message"])
+  end
+
+  test "Should not make turn if game is not yet started and turn_uid defined" do
+    g = Game.find(4)
+    g.state = "init"
+    assert g.save
+    post :make_turn, params: { id: 4, player_id: 1 }
+    assert_response :success
+    jdata = JSON.parse response.body
+    assert_match(/Start a game first./, jdata["message"])
+  end
+
+  test "Should make turn, hit the ship and get a score" do
+    old_score = Score.where(player_id: 2, game_id: 4).first.score
+    assert_equal 0, old_score
+    post :make_turn, params: { id: 4, player_id: 2, cell: "a1"}
+    assert_response :success
+    jdata = JSON.parse response.body
+    assert_match(/You hit carrier!/, jdata["message"])
+    new_score = Score.where(player_id: 2, game_id: 4).first.score
+    assert_not_equal old_score, new_score
+    assert_equal 1, new_score
   end
 end
