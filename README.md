@@ -34,5 +34,7 @@ A lof of room for improvements.
 - Better check for params to set up boards
 - Move Board relevant code from Games controller to the Board class
 - Write more tests for sabotge
-- Hadle params Rails 5.1 way instead of converting them to hash to call all fancy methodso- There is much more. Stay tuned.
+- Hadle params Rails 5.1 way instead of converting them to hash to call all
+  fancy methods
+- There is much more. Stay tuned.
 ```
