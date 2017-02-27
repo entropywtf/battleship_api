@@ -4,17 +4,25 @@ game_one:
   id: 1
   winner_uid: 1
   turn_uid: 2
+  state: "over"
 
 game_two:
   id: 2
   winner_uid: 2
   turn_uid: 1
+  state: "over"
 
 game_three:
   id: 3
   winner_uid: 2
   turn_uid: 1
+  state: "over"
 
 game_four:
   id: 4
   turn_uid: 2
+  state: "on"
+
+game_five:
+  id: 5
+  state: "init"

@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20170221215003) do
   create_table "boards", force: :cascade do |t|
     t.integer  "player_id"
     t.integer  "game_id"
-    t.string   "grid"
+    t.text     "grid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20170221215003) do
   create_table "games", force: :cascade do |t|
     t.integer  "winner_uid"
     t.integer  "turn_uid"
+    t.string   "state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -23,3 +23,9 @@ g4_p1:
 g4_p2:
   game_id: 4
   player_id: 2
+g5_p1:
+  game_id: 5
+  player_id: 1
+g5_p2:
+  game_id: 5
+  player_id: 2

@@ -6,6 +6,9 @@ Rails.application.routes.draw do
         member do
           get 'score'
           post 'add_board'
+          post 'start_game'
+          post 'pause_game'
+          post 'resume_game'
         end
         collection do
           get 'leaderboard'

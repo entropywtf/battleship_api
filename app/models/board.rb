@@ -1,4 +1,5 @@
 class Board < ApplicationRecord
+  serialize :grid
   belongs_to :player
   belongs_to :game
 
@@ -13,7 +14,6 @@ class Board < ApplicationRecord
         b_grid[row][column.to_i]=type
       end
     end
-    byebug
     b_grid
   end
 

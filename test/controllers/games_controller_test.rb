@@ -70,9 +70,47 @@ class Api::V1::GamesControllerTest < ActionController::TestCase
         submarine2: ["c4"]
       }
     }
-   # XXX Fix this test
-   # assert_response :success
-   # b = Board.first
-   # assert_equal b.grid[0][2], :carrier
+    assert_response :success
+    b = Board.first
+    assert_equal b.grid[0][2], "carrier"
+  end
+
+  test "Should start a game" do
+    post :start_game, params: { id: 5 }
+    assert_response :success
+    jdata = JSON.parse response.body
+    assert_match(/Game started. Next turn:/, jdata["message"])
+    assert_equal Game.find(5).state, "on"
+  end
+
+  test "Should not start non-existent game" do
+    post :start_game, params: { id: 666 }
+    jdata = JSON.parse response.body
+    assert_equal "not_found", jdata["status"]
+  end
+
+  test "Should not start already started game" do
+    post :start_game, params: { id: 1 }
+    jdata = JSON.parse response.body
+    assert_equal "unprocessable_entity", jdata["status"]
+    assert_match(/This game has been already started./,
+      jdata["message"])
+  end
+
+  test "Should pause a game" do
+    post :pause_game, params: { id: 1 }
+    assert_response :success
+    jdata = JSON.parse response.body
+    assert_match(/Game paused./, jdata["message"])
+    assert_equal Game.find(1).state, "paused"
+
+  end
+
+  test "Should resume a game" do
+    post :resume_game, params: { id: 1 }
+    assert_response :success
+    jdata = JSON.parse response.body
+    assert_match(/Game resumed. Next turn:/, jdata["message"])
+    assert_equal Game.find(1).state, "on"
   end
 end
