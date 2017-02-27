@@ -16,8 +16,11 @@ ActiveRecord::Schema.define(version: 20170221215003) do
   enable_extension "plpgsql"
 
   create_table "boards", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "player_id"
+    t.integer  "game_id"
+    t.text     "grid",       default: [[nil, nil, nil, nil, nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]],              array: true
+    t.datetime "created_at",                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    null: false
+    t.datetime "updated_at",                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    null: false
   end
 
   create_table "games", force: :cascade do |t|

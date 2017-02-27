@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       resources :games do
         member do
           get 'score'
+          post 'add_board'
         end
         collection do
           get 'leaderboard'

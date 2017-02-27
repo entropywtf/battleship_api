@@ -57,4 +57,21 @@ class Api::V1::GamesControllerTest < ActionController::TestCase
     assert_equal [{"name"=>"Clara", "games_won"=>2}, {"name"=>"Michi",
       "games_won"=>1}], jdata
   end
+
+  test "Should add a board" do
+    post :add_board, params: { id: 1, player_id: 1,
+      set_ships: {
+        carrier: ["a1", "a2", "a3", "a4", "a5"],
+        battleship: ["e8", "f8", "g8", "h8"],
+        cruiser: ["g3", "g4", "g5"],
+        destroyer1: ["e4", "e5"],
+        destroyer2: ["b2", "c2"],
+        submarine1: ["i2"],
+        submarine2: ["c4"]
+      }
+    }
+    assert_response :success
+    b = Board.first
+    assert_equal b.grid[0][2], :carrier
+  end
 end

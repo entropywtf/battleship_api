@@ -19,6 +19,23 @@ module Api
           score: current_score,  status: :success }
       end
 
+      def add_board
+        @game = Game.find(params[:id])
+        player_id = params[:player_id]
+        if !@game.player_ids.include?(player_id.to_i)
+          render json: "The player was not found on this game",
+            status: :not_found
+        else
+          b = Board.new(:game_id => @game.id, :player_id => player_id)
+          b.set_ships(params[:set_ships])
+          if b.save
+            render json: b, status: :success
+          else
+            render json: b.errors, status: :unprocessable_entity
+          end
+        end
+      end
+
       def leaderboard
         sql = <<EOF
 SELECT DISTINCT p.name, COUNT(g.*) AS games_won
