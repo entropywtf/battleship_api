@@ -36,7 +36,7 @@ class Api::V1::GamesControllerTest < ActionController::TestCase
 
     assert_response :success
     jdata = JSON.parse response.body
-    assert jdata["is_over"]
+    assert_equal "over", jdata["state"]
     assert_equal jdata["score"], [["Michi", 1, 15], ["Clara", 2, 9]]
   end
 
