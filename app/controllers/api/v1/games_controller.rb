@@ -26,13 +26,9 @@ module Api
           render json: "The player was not found on this game",
             status: :not_found
         else
-          b = Board.new(:game_id => @game.id, :player_id => player_id)
-          b.set_ships(params[:set_ships])
-          if b.save
-            render json: b, status: :success
-          else
-            render json: b.errors, status: :unprocessable_entity
-          end
+          board = Board.new(:game_id => @game.id, :player_id => player_id,
+            :grid => Marshal.dump(Board.initialize_empty_board))
+          render json: board.save, status: :success
         end
       end
 
